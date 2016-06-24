@@ -48,7 +48,6 @@ function initSprites(callback) {
   var sources = [
   		{
   			img_source: 'resources/SsmWh.png',
-  			
   			sprite_layout: function(img) {
 			  	sprites.player = {};
 				sprites.player.stand = {
