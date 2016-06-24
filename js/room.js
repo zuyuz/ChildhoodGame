@@ -33,11 +33,12 @@ Room.prototype.toggle = function(){
 }
 
 Room.prototype.render = function(ctx){
+    console.log(this.id+' is being rendered');
+    console.log('its state is '+this.state);
     if(!this.state){
-        for(var area in this.areas){
-            if(this.areas.hasOwnProperty(area)){
-                area.dim();
-            }
+        console.log('there are areas to dim');
+        for(var areaN=0; areaN<this.areas.length; areaN++){
+            this.areas[areaN].dim(ctx);
         }
     }
 }

@@ -34,7 +34,7 @@ function Sprite(img, x, y, width, height, img_width, img_height) {
 
 Sprite.prototype.draw = function(ctx, pos) {
 	ctx.drawImage(this.img, this.x, this.y, this.width, this.height, 
-		pos.x, pos.y,		this.img_width, this.img_height);
+		pos.x, pos.y, this.img_width, this.img_height);
 };
 
 
@@ -47,13 +47,18 @@ Sprite.prototype.draw = function(ctx, pos) {
 function initSprites(callback) {
   var sources = [
   		{
-  			img_source: 'resources/SsmWh.png',
+  			img_source: 'resources/room.jpg',
   			sprite_layout: function(img) {
-			  	sprites.player = {};
-				sprites.player.stand = {
-					up: new Sprite(img, 0,8,64,64),left: new Sprite(img, 0, 72,64,64),
-					right: new Sprite(img, 0, 200, 64,64), down: new Sprite(img,0,136,64,64)
-				};
+			  	if(!sprites.lvls){
+			  		sprites.lvls = {};
+			  	}
+				sprites.lvls.lvl1 = new Sprite(img, 0,0,720,550);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/star.png',
+  			sprite_layout: function(img) {
+				sprites.player = new Sprite(img, 906,150,72,122,36,61);
 		 	}
   		}
 	];
