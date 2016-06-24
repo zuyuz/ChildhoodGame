@@ -32,6 +32,7 @@ Level.prototype.render = function(ctx) {
 Level.prototype.getClickedRoom = function(point) {
     for (let [index, room] of enumerate(this.rooms)) {
         if (room.contains(point)) {
+            console.log('Room clicked :#'+index);
             return index;
         }
     }
