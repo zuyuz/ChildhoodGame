@@ -6,6 +6,7 @@ var Frame = window.requestAnimationFrame ||
 var player;
 var gameState = 'menu';
 var WIDTH = 900, HEIGHT = 600, OFFSET_X, OFFSET_Y;
+var eventBuffer = [], lastUpdate;
 /*frame(function name)*/
 function init(){
   console.log(Object.keys(sprites));
@@ -21,8 +22,11 @@ function init(){
 
   LevelInit();
   GameStateStack.pushState(new Level(levels.lvl1)); //add lvl1 here
-  GameStateStack.currentState().render(ctx);
+  player.init(GameStateStack.currentState().rooms[GameStateStack.currentState().activeRoom].center, GameStateStack.currentState().activeRoom);
+  
   canvas.addEventListener('mouseup', onClick);
+  lastUpdate = new Date().getTime();
+  Frame(update);
  }
 
 initSprites(init);
@@ -37,11 +41,22 @@ function loopForFun(){
   loopForFun.sign *= -1;
 }
 
-
-
 function onClick(event){
   var click = new Point(event.clientX-OFFSET_X, event.clientY-OFFSET_Y);
   console.log(click);
-  GameStateStack.currentState().onClick(event);
+  eventBuffer.push(click);
+}
+
+function update(){
+  var now = new Date().getTime();
+  if(eventBuffer.length){
+    for(var event of eventBuffer){
+      GameStateStack.currentState().onClick(event);
+    }
+    eventBuffer.length = 0;
+  }
+  player.update(ctx, lastUpdate);
   GameStateStack.currentState().render(ctx);
+  lastUpdate = now;
+  Frame(update);
 }

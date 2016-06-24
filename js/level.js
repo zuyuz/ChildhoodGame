@@ -18,7 +18,7 @@ Level.prototype.render = function(ctx) {
     ctx.save();
     // ctx.translate(canvas.width/2-this.rooms[this.activeRoom], canvas.height/2-this.rooms[this.activeRoom]);
     this.background.draw(ctx,new Point(0,0));
-    sprites.player.draw(ctx, this.rooms[this.activeRoom].center);
+    player.render(ctx);
     for(let room of this.rooms){
         room.render(ctx);
     }
@@ -30,24 +30,50 @@ Level.prototype.render = function(ctx) {
  * if there is no such room returns -1
  */
 Level.prototype.getClickedRoom = function(point) {
-    for (let [index, room] of enumerate(this.rooms)) {
+   for (let [i, room] of enumerate(this.rooms)) {
         if (room.contains(point)) {
-            console.log('Room clicked :#'+index);
-            return index;
+            return i;
         }
     }
     return -1;
+}
+
+Level.prototype.isRoomReachable = function(room) {
+    let used = new Array(this.rooms.length).fill(false)
+    
+    function dfs(curRoom) {
+        if (this.rooms[curRoom] == room) {
+            return true
+        }
+        used[curRoom] = true
+        let result = false;
+        for (let i = 0; i < this.rooms[curRoom].exits.length; i++) {
+            let nextRoom = this.rooms[curRoom].exits[i];
+            if (!used[nextRoom] && this.rooms[nextRoom].state) {
+                result = dfs.call(this, nextRoom)
+            }
+        }
+        return result
+    }
+    
+    return dfs.call(this, this.activeRoom)
 }
 
 /**
  * toggles clicked room and rooms connected to it
  */
 Level.prototype.onClick = function(point) {
-    console.log(`on click w/ params ${point}`)
-    let room = this.rooms[this.getClickedRoom(point)]
+    
+    let roomIndex = this.getClickedRoom(point)
+    let room = this.rooms[roomIndex]
     if (room) {
-        for (let connectedRoomIndex of room.connectedRooms) {
-            this.rooms[connectedRoomIndex].toggle();
+        if (roomIndex == this.activeRoom) {
+            for (let connectedRoomIndex of room.connectedRooms) {
+                this.rooms[connectedRoomIndex].toggle();
+            }
+        } else if (this.isRoomReachable(room)) {
+            this.activeRoom = roomIndex;
+            player.moveTo(point);//leave it here for now
         }
     }
 }
@@ -63,7 +89,7 @@ function LevelInit(){
                 areas: [new Area(293,59,373,364), new Area(339,424,322,45)],
                 toggle: [1],
                 state: true,
-                exits: [],
+                exits: [1],
                 center: new Point(360,225)
             }),
             new Room({
@@ -71,7 +97,7 @@ function LevelInit(){
                 areas: [new Area(61,149,231,275)],
                 toggle: [0],
                 state: false,
-                exits: [],
+                exits: [0],
                 center: new Point(120,200)
             })                
         ]
@@ -85,7 +111,7 @@ function LevelInit(){
                 new Room({
                    id: '0',
                    areas: [new Area(443,116,210,335)],
-                   toggle: [],
+                   toggle: [1,3],
                    state: true,
                    exits:[],
                    center: new Point(545,263)
@@ -93,7 +119,7 @@ function LevelInit(){
                new Room ({
                    id: '1',
                    areas: [new Area(309,460,611,110), new Area(309,274,112,189)],
-                   toggle: [],
+                   toggle: [2,0],
                    state: false,
                    exits: [],
                    center: new Point (530,520)
@@ -101,15 +127,16 @@ function LevelInit(){
                new Room({
                    id: '2',
                    areas: [new Area(670,115,251,217), new Area(741,331,180,55)],
-                   toggle: [],
+                   toggle: [1,0],
                    state: true,
                    exits:[],
                    center: new Point(800,260)
                }),
                new Room({
                    id: '3',
-                   areas: [new Area(74,276,21), new Area(741,331,180,55)],
-                   toggle: [],
+
+                   areas: [new Area(74,276,21,20), new Area(741,331,180,55)],
+                   toggle: [0,2],
                    state: true,
                    exits:[],
                    center: new Point(800,260)
