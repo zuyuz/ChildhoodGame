@@ -19,8 +19,7 @@
  */
 
 
-var sprites = {};
-
+var sprites = {lvls:{}};
 
 function Sprite(img, x, y, width, height, img_width, img_height) {
 	this.img = img;
@@ -49,11 +48,14 @@ function initSprites(callback) {
   		{
   			img_source: 'resources/room.jpg',
   			sprite_layout: function(img) {
-			  	if(!sprites.lvls){
-			  		sprites.lvls = {};
-			  	}
 				sprites.lvls.lvl1 = new Sprite(img, 0,0,720,550);
 		 	}
+  		},
+  		{
+  			img_source: 'resources/R0279 Boutique Chateau - Free House Plan F2.jpg',
+  			sprite_layout: function(img){
+				sprites.lvls.lvl2 = new Sprite(img, 0, 0, 1000, 989);
+  			}
   		},
   		{
   			img_source: 'resources/star.png',

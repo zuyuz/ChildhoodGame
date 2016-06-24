@@ -6,23 +6,27 @@
 function Room(obj){
     this.id = obj.id;
     this.areas = obj.areas;
-    this.toggle = obj.toggle;
+    this.connectedRooms = obj.toggle;
     this.state = obj.state;
     this.exits = obj.exits;
     this.center = obj.center;
     if(obj.render){
         this.render = obj.render;
     }
+    // var area = this.areas[0];
+    // var circleX = area.x+area.width/2, circleY = area.y+area.height/2;
+    // this.gradient =  ctx.createRadialGradient(circleX, circleY, 10, circleX, circleY, 100);
+        // create radial gradient
+    // this.gradient.addColorStop(0, 'rgba(100,100,100,0.1)');
+    // this.gradient.addColorStop(1, 'rgba(0,0,0,0.8)');
 }
 /*
     Given point checks if it's in the room
 */
-Room.prototype.isInside = function(point){
-    for(var area in this.areas){
-        if(this.areas.hasOwnProperty(area)){
-            if(area.contains(point)){
-                return true;
-            }
+Room.prototype.contains = function(point){
+    for(var area of this.areas){
+        if(area.contains(point)){
+            return true;
         }
     }
     return false;
@@ -33,10 +37,7 @@ Room.prototype.toggle = function(){
 }
 
 Room.prototype.render = function(ctx){
-    console.log(this.id+' is being rendered');
-    console.log('its state is '+this.state);
     if(!this.state){
-        console.log('there are areas to dim');
         for(var areaN=0; areaN<this.areas.length; areaN++){
             this.areas[areaN].dim(ctx);
         }
