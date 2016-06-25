@@ -5,17 +5,30 @@
 */
 function Room(obj){
     this.id = obj.id;
-    this.areas = obj.areas;
-    this.doors = obj.doors;
-    this.switches = obj.switches;
+    this.areas = [];
+    for(let area of obj.areas){
+        this.areas.push(new Area(area));
+    }
+    this.doors = {};
+    for(let door in obj.doors){
+        if(obj.doors.hasOwnProperty(door)){
+            this.doors[door] = new Point(obj.doors[door][0],obj.doors[door][1]);
+        }
+    }
+    this.switches = [];
+    for(let sw of obj.switches){
+        this.switches.push(new Switch(sw[0],sw[1],sw[2]));
+    }
+    console.log('switches');
+    console.log(this.switches);
     this.state = obj.state;
     this.exits = obj.exits;
-    this.center = obj.center;
+    this.center = new Point(obj.center[0],obj.center[1]);
     if(obj.render){
         this.render = obj.render;
     }
     var area = this.areas[0];
-    console.log(area);
+
     var circleX = area.x+area.width/2, circleY = area.y+area.height/2;
     this.circleX = circleX;
     this.circleY = circleY;

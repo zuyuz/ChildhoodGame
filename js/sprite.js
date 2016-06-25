@@ -52,15 +52,16 @@ function initSprites(callback) {
 		 	}
   		},
   		{
-  			img_source: 'resources/R0279 Boutique Chateau - Free House Plan F2.jpg',
+  			img_source: 'resources/1.jpg',
   			sprite_layout: function(img){
-				sprites.lvls.lvl2 = new Sprite(img, 0, 0, 1000, 989);
+				sprites.lvls.lvl2 = new Sprite(img, 0, 0, 1024, 768);
   			}
   		},
   		{
   			img_source: 'resources/star.png',
   			sprite_layout: function(img) {
 				sprites.player = new Sprite(img, 906,150,72,122,36,61);
+				sprites.restart = new Sprite(img, 634, 291, 52, 128);
 		 	}
   		},
 		 	{

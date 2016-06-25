@@ -1,5 +1,5 @@
 function Switch(area, toggles, final){
-    this.area = area;
+    this.area = new Area(area);
     this.connectedRooms = toggles;
     this.final = final || false;
 }

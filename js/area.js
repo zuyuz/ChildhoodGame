@@ -1,8 +1,15 @@
 function Area(x,y, width, height){
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    if(y){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;    
+    } else {
+        this.x = x[0];
+        this.y = x[1];
+        this.width = x[2];
+        this.height = x[3];
+    }
 }
 
 Area.prototype.contains = function(point){
