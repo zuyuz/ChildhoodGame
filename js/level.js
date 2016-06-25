@@ -66,6 +66,7 @@ Level.prototype.pathToRoom = function(room) {
                 result = dfs.call(this, nextRoom)
                 if(result){
                     path.push(curRoom);
+                    return result;
                 }
             }
         }
@@ -103,8 +104,10 @@ Level.prototype.onClick = function(point) {
     let room = this.rooms[roomIndex]
     if (room) {
         if (roomIndex == this.activeRoom) {
+            var onSwitch = false;
             for(let sw of room.switches){
                 if(sw.contains(point)){
+                    onSwitch = true;
                     if(sw.final){
                         if(this.isFinished()){
                             //switch to next level
@@ -117,6 +120,9 @@ Level.prototype.onClick = function(point) {
                         }      
                     }
                 }
+            }
+            if(!onSwitch){
+                player.scheduleMoveTo(point);
             }
 
         } else {
@@ -199,12 +205,12 @@ function LevelInit(){
                },
                {
                    id: '2',
-                   areas: [[0,183,288,201]],
+                   areas: [[0,183,288,301]],
                    switches: [[[58,470,26,13],[8]]],
                    state: false,
                    exits:[0,3],
                    doors:{
-                       '0': [290,635],
+                       '0': [290,330],
                        '3': [192,181]
                    },
                    center: [140,322]
@@ -224,7 +230,7 @@ function LevelInit(){
                {
                    id: '4',
                    areas: [[295,0,327,178]],
-                   switches: [[[537,16719,12],[3]],[[605,63,17,20],[5,6]]],
+                   switches: [[[537,167,19,12],[3]],[[605,63,17,20],[5,6]]],
                    state: false,
                    exits:[3],
                    doors:{
@@ -257,7 +263,7 @@ function LevelInit(){
                {
                    id: '7',
                    areas: [[620,350,406,193]],
-                   switches: [[[439,532,21,11],[2,4]]],
+                   switches: [[[939,532,21,11],[2,4]]],
                    state: false,
                    exits:[8,0],
                    doors:{

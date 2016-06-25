@@ -8,7 +8,10 @@ var player = {
         this.eta = undefined; //estimated time of arrival
     },
     render: function(ctx){
-        this.background.draw(ctx, this.pos);
+        var point = new Point(this.pos.x, this.pos.y);
+        point.x -= this.background.img_width/2;
+        point.y -= this.background.img_height/2;
+        this.background.draw(ctx, point);
     },
     update: function(ctx, lastUpdate){ //not sure wtff is happening here
         var now = new Date().getTime();
