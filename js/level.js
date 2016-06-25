@@ -38,11 +38,12 @@ Level.prototype.getClickedRoom = function(point) {
     return -1;
 }
 
-Level.prototype.isRoomReachable = function(room) {
+Level.prototype.pathToRoom = function(room) {
     let used = new Array(this.rooms.length).fill(false)
-    
+    let path = [];
     function dfs(curRoom) {
         if (this.rooms[curRoom] == room) {
+            path.push(curRoom);
             return true
         }
         used[curRoom] = true
@@ -51,12 +52,16 @@ Level.prototype.isRoomReachable = function(room) {
             let nextRoom = this.rooms[curRoom].exits[i];
             if (!used[nextRoom] && this.rooms[nextRoom].state) {
                 result = dfs.call(this, nextRoom)
+                if(result){
+                    path.push(curRoom);
+                }
             }
         }
         return result
     }
-    
-    return dfs.call(this, this.activeRoom)
+    let result = dfs.call(this, this.activeRoom);
+    path.pop();
+    return path;
 }
 
 /**
@@ -71,9 +76,16 @@ Level.prototype.onClick = function(point) {
             for (let connectedRoomIndex of room.connectedRooms) {
                 this.rooms[connectedRoomIndex].toggle();
             }
-        } else if (this.isRoomReachable(room)) {
-            this.activeRoom = roomIndex;
-            player.moveTo(point);//leave it here for now
+        } else {
+            let path = this.pathToRoom(room);
+            if(path.length){
+                this.activeRoom = roomIndex;
+                for(var i=path.length-1; i>=0; i--){
+                    console.log('scheduling room ');
+                    console.log(this.rooms[path[i]].center.x+' '+this.rooms[path[i]].center.y);
+                    player.scheduleMoveTo(this.rooms[path[i]].center);//leave it here for now    
+                }
+            }
         }
     }
 }

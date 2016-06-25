@@ -31,16 +31,6 @@ function init(){
 
 initSprites(init);
 
-function loopForFun(){
-  if(!loopForFun.dest){
-    loopForFun.dest = 100;
-    loopForFun.sign = 1;
-  }
-  animate(GameStateStack.currentState().rooms[0].center,'x',loopForFun.dest,2000,function(){GameStateStack.currentState().render(ctx);},loopForFun);
-  loopForFun.dest += 300*loopForFun.sign;
-  loopForFun.sign *= -1;
-}
-
 function onClick(event){
   var click = new Point(event.clientX-OFFSET_X, event.clientY-OFFSET_Y);
   console.log(click);
