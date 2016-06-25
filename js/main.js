@@ -6,7 +6,7 @@ var Frame = window.requestAnimationFrame ||
 var player;
 var gameState = 'menu';
 var WIDTH = 900, HEIGHT = 600, OFFSET_X, OFFSET_Y;
-var eventBuffer = [], lastUpdate;
+var eventBuffer = [], lastUpdate, renderBuffer = [];
 /*frame(function name)*/
 function init(){
   console.log(Object.keys(sprites));
@@ -38,6 +38,7 @@ function onClick(event){
 }
 
 function update(){
+  //@TODO - render buffer, for some splash screens, or texts, maybe
   var now = new Date().getTime();
   if(eventBuffer.length){
     for(var event of eventBuffer){
@@ -45,8 +46,21 @@ function update(){
     }
     eventBuffer.length = 0;
   }
+  
   player.update(ctx, lastUpdate);
   GameStateStack.currentState().render(ctx);
+  //this should be able to stay for a predefined amount of time
+  //possibly check for its state, and splice if its over
+  if(renderBuffer.length){
+    for(var i=0; i<renderBuffer.length; i++){
+      if(!renderBuffer[i].finished){
+        renderBuffer[i].render(ctx);
+      } else {
+        renderBuffer.splice(i,1);
+      }
+    }
+    renderBuffer.length = 0;
+  }
   lastUpdate = now;
   Frame(update);
 }

@@ -7,7 +7,7 @@ function Room(obj){
     this.id = obj.id;
     this.areas = obj.areas;
     this.doors = obj.doors;
-    this.connectedRooms = obj.toggle;
+    this.switches = obj.switches;
     this.state = obj.state;
     this.exits = obj.exits;
     this.center = obj.center;
@@ -17,7 +17,9 @@ function Room(obj){
     var area = this.areas[0];
     console.log(area);
     var circleX = area.x+area.width/2, circleY = area.y+area.height/2;
-    this.gradient =  ctx.createRadialGradient(circleX, circleY, 10, circleX, circleY, 100);
+    this.circleX = circleX;
+    this.circleY = circleY;
+    this.gradient =  ctx.createRadialGradient(this.circleX, this.circleY, 100, this.circleX, this.circleY, 300);
         // create radial gradient
     this.gradient.addColorStop(0, 'rgba(100,100,100,0.1)');
     this.gradient.addColorStop(1, 'rgba(0,0,0,0.8)');
@@ -43,6 +45,14 @@ Room.prototype.render = function(ctx){
     if(!this.state){
         for(var areaN=0; areaN<this.areas.length; areaN++){
             this.areas[areaN].dim(ctx, this.gradient); //
+        }
+        if(Math.random()>0.9){
+            this.circleX += Math.round(Math.random()*2-1);
+            this.circleY += Math.round(Math.random()*2-1);
+            this.gradient =  ctx.createRadialGradient(this.circleX, this.circleY, 10, this.circleX, this.circleY, 100);
+            // create radial gradient
+            this.gradient.addColorStop(0, 'rgba(100,100,100,0.1)');
+            this.gradient.addColorStop(1, 'rgba(0,0,0,0.8)');
         }
     }
 }

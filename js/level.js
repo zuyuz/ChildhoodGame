@@ -3,7 +3,8 @@
     function onEvent(event);
     name;
 */
-
+/*global player*/
+/*global Point*/
 var levels = {};
 
 function Level(obj) {
@@ -12,6 +13,9 @@ function Level(obj) {
     this.name = obj.name;
     this.rooms = obj.rooms;
     this.activeRoom = obj.startPos; //string referencing active room id
+    if(obj.check){
+        this.check = obj.check;
+    }
 }
 
 Level.prototype.render = function(ctx) {
@@ -63,18 +67,45 @@ Level.prototype.pathToRoom = function(room) {
     return path;
 }
 
+Level.prototype.isFinished= function(){
+    var bool = true;
+    this.rooms.forEach(function(room){
+        if(room.state){
+            bool=false;
+        }
+    });
+    return bool;
+}
+
+Level.prototype.restart = function(){
+    var name = GameStateStack.currentState().name;
+    GameStateStack.pop();
+    GameStateStack.push(new Level(lvls[name]));
+}
 /**
  * toggles clicked room and rooms connected to it
  */
 Level.prototype.onClick = function(point) {
-    
     let roomIndex = this.getClickedRoom(point)
     let room = this.rooms[roomIndex]
     if (room) {
         if (roomIndex == this.activeRoom) {
-            for (let connectedRoomIndex of room.connectedRooms) {
-                this.rooms[connectedRoomIndex].toggle();
+            for(let sw of room.switches){
+                if(sw.contains(point)){
+                    if(sw.final){
+                        if(this.isFinished()){
+                            //switch to next level
+                        } else {
+                            //game over, restart the level
+                        }
+                    } else {
+                        for (let connectedRoomIndex of sw.connectedRooms) {
+                            this.rooms[connectedRoomIndex].toggle();
+                        }      
+                    }
+                }
             }
+
         } else {
             let path = this.pathToRoom(room);
             if(path.length){
@@ -93,11 +124,13 @@ function LevelInit(){
         background: sprites.lvls.lvl1,
         name: 'lvl1',
         startPos: 0,
+        finishPos: 1,
+        nextLevel: 'lvl2',
         rooms: [
             new Room({
                 id: '0',
                 areas: [new Area(293,59,373,364), new Area(339,424,322,45)],
-                toggle: [1],
+                switches: [new Switch(new Area(432,123,45,96),[1])],
                 state: true,
                 exits: [1],
                 doors: {
@@ -108,7 +141,7 @@ function LevelInit(){
             new Room({
                 id: '1',
                 areas: [new Area(61,149,231,275)],
-                toggle: [0],
+                switches: [new Switch(new Area(146,263,60,36),[0])],
                 state: false,
                 exits: [0],
                 doors: {
@@ -123,11 +156,13 @@ function LevelInit(){
            name: 'lvl2',
            background: sprites.lvls.lvl2,
            startPos: 0,
+           finishPos: 5,
+           nextLevel: 'finish',
            rooms: [
                 new Room({
                    id: '0',
                    areas: [new Area(443,116,210,335)],
-                   toggle: [1,3],
+                   switches: [1,3],
                    state: true,
                    exits:[],
                    center: new Point(545,263)
@@ -135,7 +170,7 @@ function LevelInit(){
                new Room ({
                    id: '1',
                    areas: [new Area(309,460,611,110), new Area(309,274,112,189)],
-                   toggle: [2,0],
+                   switches: [2,0],
                    state: false,
                    exits: [],
                    center: new Point (530,520)
@@ -143,7 +178,7 @@ function LevelInit(){
                new Room({
                    id: '2',
                    areas: [new Area(670,115,251,217), new Area(741,331,180,55)],
-                   toggle: [1,0],
+                   switches: [1,0],
                    state: true,
                    exits:[],
                    center: new Point(800,260)
@@ -152,7 +187,7 @@ function LevelInit(){
                    id: '3',
 
                    areas: [new Area(74,276,21,20), new Area(741,331,180,55)],
-                   toggle: [0,2],
+                   switches: [0,2],
                    state: true,
                    exits:[],
                    center: new Point(800,260)

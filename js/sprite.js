@@ -62,6 +62,12 @@ function initSprites(callback) {
   			sprite_layout: function(img) {
 				sprites.player = new Sprite(img, 906,150,72,122,36,61);
 		 	}
+  		},
+		 	{
+  			img_source: 'resources/pvz_o_857959.jpg',
+  			sprite_layout: function(img) {
+				sprites.message = new Sprite(img, 0,0,639,490);
+		 	}
   		}
 	];
 	// do not modify below this line
