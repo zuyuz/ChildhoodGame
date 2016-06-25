@@ -60,7 +60,6 @@ Level.prototype.pathToRoom = function(room) {
         return result
     }
     let result = dfs.call(this, this.activeRoom);
-    path.pop();
     return path;
 }
 
@@ -80,10 +79,9 @@ Level.prototype.onClick = function(point) {
             let path = this.pathToRoom(room);
             if(path.length){
                 this.activeRoom = roomIndex;
-                for(var i=path.length-1; i>=0; i--){
-                    console.log('scheduling room ');
-                    console.log(this.rooms[path[i]].center.x+' '+this.rooms[path[i]].center.y);
-                    player.scheduleMoveTo(this.rooms[path[i]].center);//leave it here for now    
+                for(var i=path.length-2; i>=0; i--){
+                    player.scheduleMoveTo(this.rooms[path[i]].doors[path[i+1]]);//doors between the rooms
+                    player.scheduleMoveTo(this.rooms[path[i]].center);//center of the room  
                 }
             }
         }
@@ -102,6 +100,9 @@ function LevelInit(){
                 toggle: [1],
                 state: true,
                 exits: [1],
+                doors: {
+                    '1': new Point(239,300)
+                },
                 center: new Point(360,225)
             }),
             new Room({
@@ -110,6 +111,9 @@ function LevelInit(){
                 toggle: [0],
                 state: false,
                 exits: [0],
+                doors: {
+                  '0': new Point(293,300)  
+                },
                 center: new Point(120,200)
             })                
         ]

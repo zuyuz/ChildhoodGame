@@ -6,6 +6,7 @@
 function Room(obj){
     this.id = obj.id;
     this.areas = obj.areas;
+    this.doors = obj.doors;
     this.connectedRooms = obj.toggle;
     this.state = obj.state;
     this.exits = obj.exits;
