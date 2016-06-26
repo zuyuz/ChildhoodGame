@@ -5,6 +5,7 @@ canvas {
     height: 600px;
 }
 body {
+    background: #000;
     margin: 0;
     padding: 0;
 }

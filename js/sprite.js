@@ -64,10 +64,23 @@ function initSprites(callback) {
 				sprites.restart = new Sprite(img, 634, 291, 52, 128);
 		 	}
   		},
-		 	{
+		 {
   			img_source: 'resources/pvz_o_857959.jpg',
   			sprite_layout: function(img) {
 				sprites.message = new Sprite(img, 0,0,639,490);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/bar.png',
+  			sprite_layout: function(img) {
+				sprites.levelBanner = new Sprite(img, 0,0,900,100);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/buttons.png',
+  			sprite_layout: function(img) {
+				sprites.menu = new Sprite(img, 0,17,85,66);
+				sprites.repeat = new Sprite(img, 129,17,72,55);
 		 	}
   		}
 	];

@@ -18,6 +18,9 @@ function Room(obj){
     this.switches = [];
     for(let sw of obj.switches){
         this.switches.push(new Switch(sw[0],sw[1],sw[2]));
+        if(sw[2]){
+            console.log('creating final switch');
+        }
     }
     console.log('switches');
     console.log(this.switches);

@@ -16,11 +16,12 @@ function Level(obj) {
         this.rooms.push(new Room(room));
     }
     this.activeRoom = obj.startPos; //string referencing active room id
+    this.finalRoom = obj.finishPos;
     if(obj.check){
         this.check = obj.check;
     }
     this.interface = [
-        new Button(15, 15, 100, 100, sprites.restart, () => {console.log('u welcome');})
+        new Button(15, 15, 85, 66, sprites.menu, () => {renderBuffer.push(new superText('menu isnt done yet', 300, 300, 2000))})
     ]
 }
 
@@ -31,10 +32,13 @@ Level.prototype.render = function(ctx) {
     for(let room of this.rooms){
         room.render(ctx);
     }
+    ctx.restore();
+}
+
+Level.prototype.renderUI = function(ctx){
     for (let uiElem of this.interface) {
         uiElem.render(ctx);
     }
-    ctx.restore();
 }
 
 /**
@@ -56,7 +60,7 @@ Level.prototype.pathToRoom = function(room) {
     function dfs(curRoom) {
         if (this.rooms[curRoom] == room) {
             path.push(curRoom);
-            return true
+            return true;
         }
         used[curRoom] = true
         let result = false;
@@ -77,29 +81,34 @@ Level.prototype.pathToRoom = function(room) {
 }
 
 Level.prototype.isFinished= function(){
-    var bool = true;
-    this.rooms.forEach(function(room){
-        if(room.state){
-            bool=false;
+    var finished = true;
+    for(var i=0; i<this.rooms.length; i++){
+        if(this.rooms[i].state && i!=this.finalRoom){
+            finished = false;
         }
-    });
-    return bool;
+    }
+    return finished;
 }
 
 Level.prototype.restart = function(){
     var name = GameStateStack.currentState().name;
     GameStateStack.pop();
     GameStateStack.push(new Level(lvls[name]));
+    player.init(GameStateStack.currentState().rooms[GameStateStack.currentState().activeRoom].center, GameStateStack.currentState().activeRoom);
 }
 /**
  * toggles clicked room and rooms connected to it
  */
 Level.prototype.onClick = function(point) {
+    point.x += offsetX;
+    point.y += offsetY;
     for (let uiElem of this.interface) {
         if (uiElem.contains(point)) {
             return uiElem.onClick()
         }
     }
+    point.x -= offsetX;
+    point.y -= offsetY;
     let roomIndex = this.getClickedRoom(point)
     let room = this.rooms[roomIndex]
     if (room) {
@@ -108,16 +117,17 @@ Level.prototype.onClick = function(point) {
             for(let sw of room.switches){
                 if(sw.contains(point)){
                     onSwitch = true;
+                    console.log(sw);
+                    for (let connectedRoomIndex of sw.connectedRooms) {
+                        this.rooms[connectedRoomIndex].toggle();
+                    }
                     if(sw.final){
                         if(this.isFinished()){
-                            //switch to next level
+                            console.log('final button pressed and finished');
+                            renderBuffer.push(new superText('GJ m8, i r8 8/8', 300, 300, 2000));
                         } else {
                             //game over, restart the level
                         }
-                    } else {
-                        for (let connectedRoomIndex of sw.connectedRooms) {
-                            this.rooms[connectedRoomIndex].toggle();
-                        }      
                     }
                 }
             }
@@ -206,7 +216,7 @@ function LevelInit(){
                {
                    id: '2',
                    areas: [[0,183,288,301]],
-                   switches: [[[58,470,26,13],[8]]],
+                   switches: [[[58,470,26,13],[8]],[[242,468,27,14],[4]]],
                    state: false,
                    exits:[0,3],
                    doors:{
@@ -241,7 +251,7 @@ function LevelInit(){
                {
                    id: '5',
                    areas: [[622,0,207,175]],
-                   switches: [],
+                   switches: [[[640,162,25,16],[8], true]],
                    state: false,
                    exits:[8],
                    doors:{
@@ -252,7 +262,7 @@ function LevelInit(){
                {
                    id: '6',
                    areas: [[830,0,196,179]],
-                   switches: [],
+                   switches: [[[1004,162,22,19],[4]]],
                    state: false,
                    exits:[8],
                    doors:{
@@ -263,7 +273,7 @@ function LevelInit(){
                {
                    id: '7',
                    areas: [[620,350,406,193]],
-                   switches: [[[939,532,21,11],[2,4]]],
+                   switches: [[[939,532,21,11],[2,6]],[[672,523,26,20],[8]]],
                    state: false,
                    exits:[8,0],
                    doors:{
@@ -275,7 +285,7 @@ function LevelInit(){
                {
                    id: '8',
                    areas: [[620,179,406,173]],
-                   switches: [],
+                   switches: [[[674,332,30,20],[2]],[[618,200,20,18],[0]]],
                    state: false,
                    exits:[5,0,6,7],
                    doors:{

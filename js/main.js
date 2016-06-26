@@ -43,9 +43,12 @@ function update(){
   //@TODO - render buffer, for some splash screens, or texts, maybe
   var now = new Date().getTime();
   ctx.save();
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.beginPath();
+  ctx.fillStyle = 'black';
+  ctx.rect(0,0,canvas.width,canvas.height);
+	ctx.fill();
 	offsetX = canvas.width/2-player.pos.x;
-  offsetY = canvas.height/2-player.pos.y;
+  offsetY = canvas.height/2-player.pos.y+100;
 	ctx.translate(offsetX, offsetY);
   if(eventBuffer.length){
     for(var event of eventBuffer){
@@ -57,17 +60,21 @@ function update(){
   player.update(ctx, lastUpdate);
   GameStateStack.currentState().render(ctx);
   ctx.restore();
+  GameStateStack.currentState().renderUI(ctx);
   //this should be able to stay for a predefined amount of time
   //possibly check for its state, and splice if its over
   if(renderBuffer.length){
+    var clearIndices = [];
     for(var i=0; i<renderBuffer.length; i++){
       if(!renderBuffer[i].finished){
         renderBuffer[i].render(ctx);
       } else {
-        renderBuffer.splice(i,1);
+        clearIndices.push(i);
       }
     }
-    renderBuffer.length = 0;
+    for(let index in clearIndices){
+      renderBuffer.splice(index, 1);
+    }
   }
   lastUpdate = now;
   Frame(update);
