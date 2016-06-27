@@ -19,7 +19,7 @@
  */
 
 
-var sprites = {lvls:{}};
+var sprites = {lvls:{}, scene:{}};
 
 function Sprite(img, x, y, width, height, img_width, img_height) {
 	this.img = img;
@@ -60,14 +60,55 @@ function initSprites(callback) {
   		{
   			img_source: 'resources/star.png',
   			sprite_layout: function(img) {
-				sprites.player = new Sprite(img, 906,150,72,122,36,61);
 				sprites.restart = new Sprite(img, 634, 291, 52, 128);
 		 	}
   		},
-		 {
-  			img_source: 'resources/pvz_o_857959.jpg',
+  		{
+  			img_source: 'resources/player.png',
   			sprite_layout: function(img) {
-				sprites.message = new Sprite(img, 0,0,639,490);
+				sprites.player = new Sprite(img, 0,0, 600, 800, 48, 64);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/menuBg.png',
+  			sprite_layout: function(img) {
+				sprites.mainMenu = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/story1.png',
+  			sprite_layout: function(img) {
+				sprites.scene['scene1'] = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/story2.png',
+  			sprite_layout: function(img) {
+				sprites.scene['scene2'] = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/story3.png',
+  			sprite_layout: function(img) {
+				sprites.scene['scene3'] = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/story4.png',
+  			sprite_layout: function(img) {
+				sprites.scene['scene4'] = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
+		 {
+  			img_source: 'resources/start.png',
+  			sprite_layout: function(img) {
+				sprites.startGame = new Sprite(img, 0,0,300,100);
+		 	}
+  		},
+  		 {
+  			img_source: 'resources/quit.png',
+  			sprite_layout: function(img) {
+				sprites.endGame = new Sprite(img, 0,0,300,100);
 		 	}
   		},
   		{

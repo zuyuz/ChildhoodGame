@@ -23,8 +23,10 @@ function Level(obj) {
     this.interface = [
         new Button(15, 15, 85, 66, sprites.menu, () => {renderBuffer.push(new superText('menu isnt done yet', 300, 300, 2000))})
     ]
+    player.init(this.rooms[this.activeRoom].center, this.activeRoom);
 }
 
+Level.prototype.state = 'game';
 Level.prototype.render = function(ctx) {
 
     this.background.draw(ctx,new Point(0,0));
@@ -116,6 +118,7 @@ Level.prototype.onClick = function(point) {
             var onSwitch = false;
             for(let sw of room.switches){
                 if(sw.contains(point)){
+                    sounds.clickSwitch.play();
                     onSwitch = true;
                     console.log(sw);
                     for (let connectedRoomIndex of sw.connectedRooms) {

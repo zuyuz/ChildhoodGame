@@ -20,5 +20,18 @@ var GameStateStack = {
     
     currentState: function() {
         return this.__curState;
+    },
+    next: function(){
+        var name = this.currentState().name;
+        if(name){
+            if(script.hasOwnProperty(name)){
+                this.popState();
+                if(script[name][0] == 'level'){
+                    this.pushState(new Level(JSON.parse(levels[script[name][1]])))       
+                } else if (script[name][0] == 'scene'){
+                    this.pushState(scenes[script[name][1]])
+                }
+            }
+        }
     }
 };

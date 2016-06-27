@@ -1,14 +1,15 @@
+var scenes = {};
+
 function Scene(obj){
     this.name = obj.name;
-    this.background = obj.background;
     this.interface = obj.interface;
 }
 
+Scene.prototype.state = 'scene';
+
 Scene.prototype.render = function(ctx){
-    if(this.background){
-        this.background.draw(ctx,new Point(0,0));
-    }
     for (let uiElem of this.interface) {
+        console.log(uiElem);
         uiElem.render(ctx);
     }
 }
@@ -21,4 +22,50 @@ Scene.prototype.onClick = function(point){
             return uiElem.onClick()
         }
     }
+}
+
+function ScenesInit(){
+    scenes = {};
+    scenes['scene1'] = new Scene({
+        'name': 'scene1',
+        'interface': [
+            new Button((canvas.width - sprites.scene['scene1'].width)/2,
+                     (canvas.height - sprites.scene['scene1'].height)/2,
+                     sprites.scene['scene1'].width, sprites.scene['scene1'].height,
+                    sprites.scene['scene1'], function(){ GameStateStack.next() })
+        ]
+    });
+    
+    scenes['scene2'] = new Scene({
+        'name': 'scene2',
+        'interface': [
+            new Button((canvas.width - sprites.scene['scene2'].width)/2,
+                     (canvas.height - sprites.scene['scene2'].height)/2,
+                     sprites.scene['scene2'].width, sprites.
+                     scene['scene2'].height,
+                    sprites.scene['scene2'], function(){ GameStateStack.next() })
+        ]
+    });
+    
+    scenes['scene3'] = new Scene({
+        'name': 'scene3',
+        'interface': [
+            new Button((canvas.width - sprites.scene['scene3'].width)/2,
+                     (canvas.height - sprites.scene['scene3'].height)/2,
+                     sprites.scene['scene3'].width, sprites.
+                     scene['scene3'].height,
+                    sprites.scene['scene3'], function(){ GameStateStack.next() })
+        ]
+    });
+    
+    scenes['scene4'] = new Scene({
+        'name': 'scene4',
+        'interface': [
+            new Button((canvas.width - sprites.scene['scene4'].width)/2,
+                     (canvas.height - sprites.scene['scene4'].height)/2,
+                     sprites.scene['scene4'].width, sprites.
+                     scene['scene4'].height,
+                    sprites.scene['scene4'], function(){ GameStateStack.next() })
+        ]
+    });
 }

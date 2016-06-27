@@ -7,30 +7,37 @@ var player;
 var gameState = 'menu';
 var WIDTH = 900, HEIGHT = 600, offsetX, offsetY,OFFSET_X,OFFSET_Y;
 var eventBuffer = [], lastUpdate, renderBuffer = [];
+var script = {
+  'menu': ['scene','scene1'],
+  'scene1': ['scene','scene2'],
+  'scene2': ['scene','scene3'],
+  'scene3': ['scene','scene4'],
+  'scene4': ['level', 'lvl2']
+};
 /*frame(function name)*/
 function init(){
   console.log(Object.keys(sprites));
   canvas = document.getElementsByTagName('canvas')[0];
-  // canvas.width = window.innerWidth;
-  // canvas.height = window.innerHeight;
-  canvas.width = WIDTH;
-  canvas.height = HEIGHT;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
   offsetX = canvas.offsetLeft;
   OFFSET_X = canvas.offsetLeft;
   offsetY = canvas.offsetTop;
   OFFSET_Y = canvas.offsetTop;
   ctx = canvas.getContext('2d');
   console.log('aaaaa fuck you stupid cloud 9, using global name start, motherfuckers');
-
+  initMenu();
   LevelInit();
-  GameStateStack.pushState(new Level(JSON.parse(levels.lvl2))); //add lvl1 here
-  player.init(GameStateStack.currentState().rooms[GameStateStack.currentState().activeRoom].center, GameStateStack.currentState().activeRoom);
+  ScenesInit();
+  // GameStateStack.pushState(new Level(JSON.parse(levels.lvl2))); //add lvl1 here
+  GameStateStack.pushState(mainMenu); //add lvl1 here
   
   canvas.addEventListener('mouseup', onClick);
   lastUpdate = new Date().getTime();
   Frame(update);
- }
-
+}
+ 
+initSound();
 initSprites(init);
 
 function onClick(event){
@@ -47,17 +54,23 @@ function update(){
   ctx.fillStyle = 'black';
   ctx.rect(0,0,canvas.width,canvas.height);
 	ctx.fill();
-	offsetX = canvas.width/2-player.pos.x;
-  offsetY = canvas.height/2-player.pos.y+100;
-	ctx.translate(offsetX, offsetY);
+	if(GameStateStack.currentState().state == 'game'){
+  	offsetX = canvas.width/2-player.pos.x;
+    offsetY = canvas.height/2-player.pos.y+100;
+	} else {
+	  offsetX = 0;
+	  offsetY = 0;
+	}
   if(eventBuffer.length){
     for(var event of eventBuffer){
       GameStateStack.currentState().onClick(event);
     }
     eventBuffer.length = 0;
   }
-  
-  player.update(ctx, lastUpdate);
+	ctx.translate(offsetX, offsetY);
+	if(GameStateStack.currentState().state == 'game'){
+    player.update(ctx, lastUpdate);
+	}
   GameStateStack.currentState().render(ctx);
   ctx.restore();
   GameStateStack.currentState().renderUI(ctx);
