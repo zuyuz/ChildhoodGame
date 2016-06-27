@@ -12,7 +12,8 @@ var script = {
   'scene1': ['scene','scene2'],
   'scene2': ['scene','scene3'],
   'scene3': ['scene','scene4'],
-  'scene4': ['level', 'lvl2']
+  'scene4': ['level', 'lvl3'],
+  'lvl3': ['level','lvl2']
 };
 /*frame(function name)*/
 function init(){

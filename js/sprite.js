@@ -58,6 +58,12 @@ function initSprites(callback) {
   			}
   		},
   		{
+  			img_source: 'resources/level3.png',
+  			sprite_layout: function(img){
+				sprites.lvls.lvl3 = new Sprite(img, 0, 0, 2560, 2560);
+  			}
+  		},
+  		{
   			img_source: 'resources/star.png',
   			sprite_layout: function(img) {
 				sprites.restart = new Sprite(img, 634, 291, 52, 128);
