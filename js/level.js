@@ -21,7 +21,8 @@ function Level(obj) {
         this.check = obj.check;
     }
     this.interface = [
-        new Button(15, 15, 85, 66, sprites.menu, () => {renderBuffer.push(new superText('menu isnt done yet', 300, 300, 2000))})
+        new Button(15, 15, 85, 66, sprites.menu, () => {renderBuffer.push(new superText('menu isnt done yet', 300, 300, 2000))}),
+        new Button(105, 25, 40, 40, sprites.repeat, () => {GameStateStack.currentState().restart()})
     ]
     player.init(this.rooms[this.activeRoom].center, this.activeRoom);
 }
@@ -94,8 +95,8 @@ Level.prototype.isFinished= function(){
 
 Level.prototype.restart = function(){
     var name = GameStateStack.currentState().name;
-    GameStateStack.pop();
-    GameStateStack.push(new Level(lvls[name]));
+    GameStateStack.popState();
+    GameStateStack.pushState(new Level(JSON.parse(levels[name])));
     player.init(GameStateStack.currentState().rooms[GameStateStack.currentState().activeRoom].center, GameStateStack.currentState().activeRoom);
 }
 /**
@@ -120,7 +121,12 @@ Level.prototype.onClick = function(point) {
                 if(sw.contains(point)){
                     sounds.clickSwitch.play();
                     onSwitch = true;
-                    console.log(sw);
+                    var hint = '';
+                    for(var i=0; i<sw.connectedRooms.length; i++){
+                        hint += (sw.connectedRooms[i]+1)+' ';    
+                    }
+                    console.log('hint is :'+hint);
+                    renderBuffer.push(new superText(hint, player.pos.x, player.pos.y-40, 3000, true));
                     for (let connectedRoomIndex of sw.connectedRooms) {
                         this.rooms[connectedRoomIndex].toggle();
                     }
@@ -128,6 +134,7 @@ Level.prototype.onClick = function(point) {
                         if(this.isFinished()){
                             console.log('final button pressed and finished');
                             renderBuffer.push(new superText('GJ m8, i r8 8/8', 300, 300, 2000));
+                            GameStateStack.next();
                         } else {
                             //game over, restart the level
                         }
@@ -193,111 +200,111 @@ function LevelInit(){
            rooms: [
                 {
                    id: '0',
-                   areas: [[290,182,330,583]],
-                   switches: [[[291,533,21,20],[1]]],
+                   areas: [[304,182,312,570]],
+                   switches: [[[300,538,33,34],[1]]],
                    state: true,
                    exits:[1,2,7,8],
                    doors:{
-                       '1': [290,635],
-                       '2': [290,327],
-                       '7': [623,439],
-                       '8': [622,260]
+                       '1': [295,606],
+                       '2': [296,302],
+                       '7': [623,443],
+                       '8': [621,267]
                    },
-                   center: [450,430]
+                   center: [460,460]
                },
                {
                    id: '1',
-                   areas: [[0,484,290,286]],
-                   switches: [[[190,484,27,13],[5,7]],[[0,711,13,22],[3]]],
+                   areas: [[0,491,288,279]],
+                   switches: [[[266,520,31,36],[5,7]],[[267,654,30,34],[3]]],
                    state: false,
                    exits:[0],
                    doors:{
-                       '0': [290,635]
+                       '0': [295,606]
                    },
-                   center: [140,620]
+                   center: [170,573]
                },
                {
                    id: '2',
-                   areas: [[0,183,288,301]],
-                   switches: [[[58,470,26,13],[8]],[[242,468,27,14],[4]]],
+                   areas: [[0,184,288,291]],
+                   switches: [[[133,444,28,35],[8]],[[266,385,31,32],[4]]],
                    state: false,
                    exits:[0,3],
                    doors:{
-                       '0': [290,330],
-                       '3': [192,181]
+                       '0': [296,302],
+                       '3': [168,175]
                    },
-                   center: [140,322]
+                   center: [231,305]
                },
                {
                    id: '3',
-                   areas: [[0,0,292,179]],
+                   areas: [[0,0,285,169]],
                    switches: [],
                    state: false,
                    exits:[2,4],
                    doors:{
-                       '2': [192,181],
-                       '4': [292,71]
+                       '2': [168,175],
+                       '4': [289,83]
                    },
-                   center: [150,90]
+                   center: [174,100]
                },
                {
                    id: '4',
-                   areas: [[295,0,327,178]],
-                   switches: [[[537,167,19,12],[3]],[[605,63,17,20],[5,6]]],
+                   areas: [[295,0,322,171]],
+                   switches: [[[555,141,30,30],[3]],[[598,79,36,22],[5,6]]],
                    state: false,
                    exits:[3],
                    doors:{
-                       '3': [292,71]
+                       '3': [289,83]
                    },
-                   center: [457,90]
+                   center: [455,80]
                },
                {
                    id: '5',
-                   areas: [[622,0,207,175]],
-                   switches: [[[640,162,25,16],[8], true]],
+                   areas: [[629,0,198,170]],
+                   switches: [[[640,142,28,32],[8], true]],
                    state: false,
                    exits:[8],
                    doors:{
-                       '8': [740,180]
+                       '8': [717,175]
                    },
-                   center: [732,90]
+                   center: [675,65]
                },
                {
                    id: '6',
-                   areas: [[830,0,196,179]],
-                   switches: [[[1004,162,22,19],[4]]],
+                   areas: [[830,0,196,167]],
+                   switches: [[[994,139,28,32],[4]]],
                    state: false,
                    exits:[8],
                    doors:{
-                       '8': [925,180]
+                       '8': [921,175]
                    },
-                   center: [925,90]
+                   center: [984,76]
                },
                {
                    id: '7',
-                   areas: [[620,350,406,193]],
-                   switches: [[[939,532,21,11],[2,6]],[[672,523,26,20],[8]]],
+                   areas: [[628,366,398,175]],
+                   switches: [[[917,508,30,30],[2,6]],[[704,511,36,29],[8]]],
                    state: false,
                    exits:[8,0],
                    doors:{
-                       '8': [840,350],
-                       '0': [623,438]
+                       '8': [812,355],
+                       '0': [623,443]
                    },
-                   center: [830,450]
+                   center: [744,454]
                },
                {
                    id: '8',
-                   areas: [[620,179,406,173]],
-                   switches: [[[674,332,30,20],[2]],[[618,200,20,18],[0]]],
+                   areas: [[627,179,399,170]],
+                   switches: [[[674,332,30,20],[2]],[[621,200,30,36],[0]]],
                    state: false,
                    exits:[5,0,6,7],
                    doors:{
-                       '5': [740,180],
-                       '0': [622,260],
-                       '6': [925,180],
-                       '7': [840,350]
+                       '5': [717,175],
+                       '0': [621,267],
+                       '6': [921,175],
+                       '7': [812,355]
                    },
-                   center: [830,260]
+                   center: [733,263]
                },
            ]
     }); 
@@ -311,7 +318,7 @@ function LevelInit(){
             {
                 id: '0',
                 areas: [[1125,350,748,257], [1410,606,124,96]],
-                switches: [],
+                switches: [ [[1378, 541, 31, 66], [1, 4, 5]] ],
                 state: true,
                 exits: [1],
                 doors: {
@@ -323,7 +330,7 @@ function LevelInit(){
                 id: '1',
                 areas: [[318,752,1601,221],[513,972,64,113],[1406,968,68,118],[1760,972,96,117]],
                 switches: [],
-                state: true,
+                state: false,
                 exits: [0,2,3,4,5],
                 doors: {
                   '0': [1464,662],
@@ -337,8 +344,8 @@ function LevelInit(){
             {
                 id: '2',
                 areas: [[1984, 705, 385, 278]],
-                switches: [],
-                state: true,
+                switches: [ [[2078, 738, 39, 63], [3, 8]] ],
+                state: false,
                 exits: [1],
                 doors: {
                     '1': [1950, 845]
@@ -348,8 +355,8 @@ function LevelInit(){
             {
                 id: '3',
                 areas: [[428, 1088, 188, 382]],
-                switches: [],
-                state: true,
+                switches: [ [[446, 1185, 36, 67], [1, 6]] ],
+                state: false,
                 exits: [1, 7],
                 doors: {
                     '1': [540, 1050],
@@ -360,8 +367,8 @@ function LevelInit(){
             {
                 id: '4',
                 areas: [[1221, 1105, 410, 248]],
-                switches: [],
-                state: true,
+                switches: [ [[1346, 1185, 30, 66], [8, 2, 5]] ],
+                state: false,
                 exits: [1, 8],
                 doors: {
                     '1': [1430, 1017],
@@ -372,7 +379,7 @@ function LevelInit(){
             {
                 id: '5',
                 areas: [[1717, 1100, 185, 400]],
-                switches: [],
+                switches: [ [[1730, 1217, 30, 670], []] ],
                 state: true,
                 exits: [1, 9],
                 doors: {
@@ -384,7 +391,7 @@ function LevelInit(){
             {
                 id: '6',
                 areas: [[1992, 1165, 374, 578]],
-                switches: [],
+                switches: [ [[2210, 1310, 30, 70],[]] ],
                 state: true,
                 exits: [9],
                 doors: {
@@ -395,7 +402,7 @@ function LevelInit(){
             {
                 id: '7',
                 areas: [[321, 1569, 414, 389],[772,1856,857,314]],
-                switches: [],
+                switches: [ [[1284, 1921, 30, 68], [3,8,9]], [[1506, 1921, 32, 64], [2, 8, 9]] ],
                 state: true,
                 exits: [3, 8, 9],
                 doors: {
@@ -408,8 +415,8 @@ function LevelInit(){
             {
                 id: '8',
                 areas: [[809, 1501, 820, 220]],
-                switches: [],
-                state: true,
+                switches: [ [[1348, 1504, 30, 67],[6, 9]] ],
+                state: false,
                 exits: [4, 7],
                 doors: {
                     '4': [1436, 1457],
@@ -420,7 +427,7 @@ function LevelInit(){
             {
                 id: '9',
                 areas: [[1698, 1609, 221, 432]],
-                switches: [],
+                switches: [ [[1860, 1602, 30, 67], [5, 2]] ],
                 state: true,
                 exits: [5, 6, 7],
                 doors: {
