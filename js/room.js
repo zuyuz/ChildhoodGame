@@ -9,6 +9,11 @@ function Room(obj){
     for(let area of obj.areas){
         this.areas.push(new Area(area));
     }
+    this.dimAreas = [];
+    var dim = obj.dimAreas || obj.areas;
+    for(let area of dim){
+        this.dimAreas.push(new Area(area));
+    }
     this.doors = {};
     for(let door in obj.doors){
         if(obj.doors.hasOwnProperty(door)){
@@ -59,8 +64,8 @@ Room.prototype.toggle = function(){
 
 Room.prototype.render = function(ctx){
     if(!this.state){
-        for(var areaN=0; areaN<this.areas.length; areaN++){
-            this.areas[areaN].dim(ctx, this.gradient); //
+        for(var areaN=0; areaN<this.dimAreas.length; areaN++){
+            this.dimAreas[areaN].dim(ctx, this.gradient); //
         }
         if(Math.random()>0.9){
             this.circleX += Math.round(Math.random()*2-1);

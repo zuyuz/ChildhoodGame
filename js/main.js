@@ -9,6 +9,7 @@ var WIDTH = 900, HEIGHT = 600, offsetX, offsetY,OFFSET_X,OFFSET_Y;
 var eventBuffer = [], lastUpdate, renderBuffer = [];
 var script = {
   'lvl2': ['scene','scene1'],
+  'lvl3': ['level','lvl2'],
   'scene1': ['scene','scene2'],
   'scene2': ['scene','scene3'],
   'scene3': ['scene','scene4'],

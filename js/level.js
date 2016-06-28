@@ -20,6 +20,7 @@ function Level(obj) {
     if(obj.check){
         this.check = obj.check;
     }
+        // this.
     this.interface = [
         new Button(15, 15, 85, 66, sprites.menu, () => {renderBuffer.push(new superText('menu isnt done yet', 300, 300, 2000))}),
         new Button(105, 25, 40, 40, sprites.repeat, () => {GameStateStack.currentState().restart()})
@@ -318,7 +319,8 @@ function LevelInit(){
             {
                 id: '0',
                 areas: [[1125,350,748,257], [1410,606,124,96]],
-                switches: [ [[1378, 541, 31, 66], [1, 4, 5]] ],
+                dimAreas: [ [1086, 254, 835, 355] , [1405, 608, 132, 39]],
+                switches: [ [[1378, 541, 31, 66], [1, 2]] ],
                 state: true,
                 exits: [1],
                 doors: {
@@ -329,6 +331,7 @@ function LevelInit(){
             {
                 id: '1',
                 areas: [[318,752,1601,221],[513,972,64,113],[1406,968,68,118],[1760,972,96,117]],
+                dimAreas: [[317, 701, 1605, 292],[512, 992, 64, 98], [1409, 990, 66, 98], [1762, 990, 94, 94]],
                 switches: [],
                 state: false,
                 exits: [0,2,3,4,5],
@@ -344,8 +347,9 @@ function LevelInit(){
             {
                 id: '2',
                 areas: [[1984, 705, 385, 278]],
-                switches: [ [[2078, 738, 39, 63], [3, 8]] ],
-                state: false,
+                dimAreas: [[1984, 702, 386, 289], [1921, 799, 62, 99]],
+                switches: [ [[2078, 738, 39, 63], [3, 8, 4]] ],
+                state: true,
                 exits: [1],
                 doors: {
                     '1': [1950, 845]
@@ -355,8 +359,9 @@ function LevelInit(){
             {
                 id: '3',
                 areas: [[428, 1088, 188, 382]],
-                switches: [ [[446, 1185, 36, 67], [1, 6]] ],
-                state: false,
+                dimAreas: [ [318, 1086, 416, 386], [510, 1469, 68, 97] ],
+                switches: [ [[446, 1185, 36, 67], [1, 6, 5]] ],
+                state: true,
                 exits: [1, 7],
                 doors: {
                     '1': [540, 1050],
@@ -367,7 +372,8 @@ function LevelInit(){
             {
                 id: '4',
                 areas: [[1221, 1105, 410, 248]],
-                switches: [ [[1346, 1185, 30, 66], [8, 2, 5]] ],
+                dimAreas: [ [1217, 1088, 416, 290], [1408, 1376, 64, 97]],
+                switches: [ [[1346, 1185, 30, 66], [ 2, 5]] ],
                 state: false,
                 exits: [1, 8],
                 doors: {
@@ -379,7 +385,8 @@ function LevelInit(){
             {
                 id: '5',
                 areas: [[1717, 1100, 185, 400]],
-                switches: [ [[1730, 1217, 30, 670], []] ],
+                dimAreas: [ [1696, 1086, 224, 418], [1760, 1500, 96, 102] ],
+                switches: [ [[1730, 1217, 30, 670], [0, 1, 4]] ],
                 state: true,
                 exits: [1, 9],
                 doors: {
@@ -391,8 +398,9 @@ function LevelInit(){
             {
                 id: '6',
                 areas: [[1992, 1165, 374, 578]],
-                switches: [ [[2210, 1310, 30, 70],[]] ],
-                state: true,
+                dimAreas: [ [1984, 1088, 388, 674], [1921, 1628, 63, 68] ],
+                switches: [ [[2210, 1310, 30, 70], [0, 8]] ],
+                state: false,
                 exits: [9],
                 doors: {
                     '9': [1954, 1657]
@@ -402,8 +410,9 @@ function LevelInit(){
             {
                 id: '7',
                 areas: [[321, 1569, 414, 389],[772,1856,857,314]],
-                switches: [ [[1284, 1921, 30, 68], [3,8,9]], [[1506, 1921, 32, 64], [2, 8, 9]] ],
-                state: true,
+                dimAreas: [ [320, 1589, 414, 608], [736, 1793, 897, 384] ],
+                switches: [ [[1284, 1921, 30, 68], [3,8,9]], [[1506, 1921, 32, 64], [2, 8]] ],
+                state: false,
                 exits: [3, 8, 9],
                 doors: {
                     '3': [542, 1544],
@@ -415,6 +424,7 @@ function LevelInit(){
             {
                 id: '8',
                 areas: [[809, 1501, 820, 220]],
+                dimAreas: [ [798, 1470, 839, 257], [1182, 1728, 66, 100] ],
                 switches: [ [[1348, 1504, 30, 67],[6, 9]] ],
                 state: false,
                 exits: [4, 7],
@@ -427,7 +437,8 @@ function LevelInit(){
             {
                 id: '9',
                 areas: [[1698, 1609, 221, 432]],
-                switches: [ [[1860, 1602, 30, 67], [5, 2]] ],
+                dimAreas: [ [1694, 1596, 226, 452], [1629, 1920, 66, 69] ],
+                switches: [ [[1860, 1602, 30, 67], [1, 5, 7], true] ],
                 state: true,
                 exits: [5, 6, 7],
                 doors: {
