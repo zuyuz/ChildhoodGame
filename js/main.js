@@ -17,7 +17,8 @@ var script = {
   'scene1': ['scene','scene2'],
   'scene2': ['scene','scene3'],
   'scene3': ['scene','scene4'],
-  'scene4': ['level', 'lvl5'],
+  'scene4': ['scene', 'tutorial'],
+  'tutorial': ['level', 'lvl5'],
   'menu': ['scene', 'scene1']
 };
 /*frame(function name)*/
@@ -31,7 +32,6 @@ function init(){
   offsetY = canvas.offsetTop;
   OFFSET_Y = canvas.offsetTop;
   ctx = canvas.getContext('2d');
-  console.log('aaaaa fuck you stupid cloud 9, using global name start, motherfuckers');
   initMenu();
   LevelInit();
   ScenesInit();

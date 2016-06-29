@@ -75,7 +75,16 @@ function ScenesInit(){
                     sprites.scene['scene4'], function(){ GameStateStack.next() })
         ]
     });
-    
+    scenes['tutorial'] = new Scene({
+        'name': 'tutorial',
+        'interface': [
+            new Button((canvas.width - sprites.scene['tutorial'].width)/2,
+                     (canvas.height - sprites.scene['tutorial'].height)/2,
+                     sprites.scene['tutorial'].width, sprites.
+                     scene['tutorial'].height,
+                    sprites.scene['tutorial'], function(){ GameStateStack.next() })
+        ]
+    });
     scenes['intro'] = new Scene({
         'name': 'intro',
         'interface': [

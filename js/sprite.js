@@ -112,6 +112,12 @@ function initSprites(callback) {
 		 	}
   		},
   		{
+  			img_source: 'resources/tutorial.png',
+  			sprite_layout: function(img) {
+				sprites.scene['tutorial'] = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
+  		{
   			img_source: 'resources/finalScene.png',
   			sprite_layout: function(img) {
 				sprites.scene['finalScene'] = new Sprite(img, 0,0,600,600);
