@@ -22,7 +22,7 @@ function Level(obj) {
     }
         // this.
     this.interface = [
-        new Button(15, 15, 85, 66, sprites.menu, () => {renderBuffer.push(new superText('menu isnt done yet', 300, 300, 2000))}),
+        new Button(15, 15, 85, 66, sprites.menu, () => {GameStateStack.pushState(scenes['menu']);}),
         new Button(105, 25, 40, 40, sprites.repeat, () => {GameStateStack.currentState().restart()})
     ]
     player.init(this.rooms[this.activeRoom].center, this.activeRoom);
@@ -126,8 +126,9 @@ Level.prototype.onClick = function(point) {
                     for(var i=0; i<sw.connectedRooms.length; i++){
                         hint += (sw.connectedRooms[i]+1)+' ';    
                     }
-                    console.log('hint is :'+hint);
-                    renderBuffer.push(new superText(hint, player.pos.x, player.pos.y-40, 3000, true));
+                    if(this.name !== 'lvl2'){
+                        renderBuffer.push(new superText(hint, player.pos.x, player.pos.y-40, 3000, true));
+                    }
                     for (let connectedRoomIndex of sw.connectedRooms) {
                         this.rooms[connectedRoomIndex].toggle();
                     }
@@ -557,7 +558,7 @@ function LevelInit(){
                    areas: [[1918,1628,582,870]],
                    switches: [[[2470,2303,27,31],[7]]],
                    state: true,
-                   exits:[5,7],
+                   exits:[7,5],
                    doors:{
                        '5': [2286,1600],
                        '7': [1893,2118]
@@ -566,5 +567,122 @@ function LevelInit(){
                }
            ]
     });
+    levels['lvl5'] = JSON.stringify({
+           name: 'lvl5',
+           background: 'lvl5',
+           startPos: 0,
+           finishPos: 0,
+           nextLevel: 'finish',
+           rooms: [
+                {
+                   id: '0',
+                   areas: [[832,322,897,416]],
+                   switches: [[[1602,350,32,32],[3]]],
+                   state: true,
+                   exits:[1,2,3,4],
+                   doors:{
+                       '1': [1264,800],
+                       '2': [1264,350],
+                       '3': [623,443],
+                       '4': [621,267]
+                   },
+                   center: [460,460]
+               },
+               {
+                   id: '1',
+                   areas: [[0,491,288,279]],
+                   switches: [[[266,520,31,36],[5,7]],[[267,654,30,34],[3]]],
+                   state: false,
+                   exits:[0],
+                   doors:{
+                       '0': [295,606]
+                   },
+                   center: [170,573]
+               },
+               {
+                   id: '2',
+                   areas: [[0,184,288,291]],
+                   switches: [[[133,444,28,35],[8]],[[266,385,31,32],[4]]],
+                   state: false,
+                   exits:[0,3],
+                   doors:{
+                       '0': [296,302],
+                       '3': [168,175]
+                   },
+                   center: [231,305]
+               },
+               {
+                   id: '3',
+                   areas: [[0,0,285,169]],
+                   switches: [],
+                   state: false,
+                   exits:[2,4],
+                   doors:{
+                       '2': [168,175],
+                       '4': [289,83]
+                   },
+                   center: [174,100]
+               },
+               {
+                   id: '4',
+                   areas: [[295,0,322,171]],
+                   switches: [[[555,141,30,30],[3]],[[598,79,36,22],[5,6]]],
+                   state: false,
+                   exits:[3],
+                   doors:{
+                       '3': [289,83]
+                   },
+                   center: [455,80]
+               },
+               {
+                   id: '5',
+                   areas: [[629,0,198,170]],
+                   switches: [[[640,142,28,32],[8], true]],
+                   state: false,
+                   exits:[8],
+                   doors:{
+                       '8': [717,175]
+                   },
+                   center: [675,65]
+               },
+               {
+                   id: '6',
+                   areas: [[830,0,196,167]],
+                   switches: [[[994,139,28,32],[4]]],
+                   state: false,
+                   exits:[8],
+                   doors:{
+                       '8': [921,175]
+                   },
+                   center: [984,76]
+               },
+               {
+                   id: '7',
+                   areas: [[628,366,398,175]],
+                   switches: [[[917,508,30,30],[2,6]],[[704,511,36,29],[8]]],
+                   state: false,
+                   exits:[8,0],
+                   doors:{
+                       '8': [812,355],
+                       '0': [623,443]
+                   },
+                   center: [744,454]
+               },
+               {
+                   id: '8',
+                   areas: [[627,179,399,170]],
+                   switches: [[[674,332,30,20],[2]],[[621,200,30,36],[0]]],
+                   state: false,
+                   exits:[5,0,6,7],
+                   doors:{
+                       '5': [717,175],
+                       '0': [621,267],
+                       '6': [921,175],
+                       '7': [812,355]
+                   },
+                   center: [733,263]
+               },
+           ]
+    }); 
 }
 

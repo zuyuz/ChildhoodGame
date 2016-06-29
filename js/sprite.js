@@ -70,6 +70,12 @@ function initSprites(callback) {
   			}
   		},
   		{
+  			img_source: 'resources/level5.png',
+  			sprite_layout: function(img){
+				sprites.lvls.lvl5 = new Sprite(img, 0, 0, 2560, 2560);
+  			}
+  		},
+  		{
   			img_source: 'resources/star.png',
   			sprite_layout: function(img) {
 				sprites.restart = new Sprite(img, 634, 291, 52, 128);
@@ -112,6 +118,12 @@ function initSprites(callback) {
 		 	}
   		},
   		{
+  			img_source: 'resources/finalScene.png',
+  			sprite_layout: function(img) {
+				sprites.scene['finalScene'] = new Sprite(img, 0,0,600,600);
+		 	}
+  		},
+  		{
   			img_source: 'resources/intro.png',
   			sprite_layout: function(img) {
 				sprites.scene['intro'] = new Sprite(img, 0,0,500,500);
@@ -133,6 +145,12 @@ function initSprites(callback) {
   			img_source: 'resources/resume.png',
   			sprite_layout: function(img) {
 				sprites.resume = new Sprite(img, 0,0,150,70);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/credits.png',
+  			sprite_layout: function(img) {
+				sprites.lightbulb = new Sprite(img, 0,0,150,70);
 		 	}
   		},
   		{

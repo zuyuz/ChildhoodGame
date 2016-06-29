@@ -10,7 +10,8 @@ var eventBuffer = [], lastUpdate, renderBuffer = [];
 var script = {
   'intro': ['menu'],
   'lvl2': ['level','lvl4'],
-  'lvl3': ['scene', 'intro'],
+  'lvl3': ['scene', 'finalScene'],
+  'finalScene': ['scene', 'intro'],
   'lvl4': ['level', 'lvl3'],
   'scene1': ['scene','scene2'],
   'scene2': ['scene','scene3'],
