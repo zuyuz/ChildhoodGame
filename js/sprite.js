@@ -76,12 +76,6 @@ function initSprites(callback) {
   			}
   		},
   		{
-  			img_source: 'resources/star.png',
-  			sprite_layout: function(img) {
-				sprites.restart = new Sprite(img, 634, 291, 52, 128);
-		 	}
-  		},
-  		{
   			img_source: 'resources/player.png',
   			sprite_layout: function(img) {
 				sprites.player = new Sprite(img, 0,0, 600, 800, 48, 64);
