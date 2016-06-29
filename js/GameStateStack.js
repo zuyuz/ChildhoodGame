@@ -26,7 +26,7 @@ var GameStateStack = {
         let savedLvl = localStorage.getItem('progress') || name;
         this.pushState(new Level(JSON.parse(levels[savedLvl])));
         var text = GameStateStack.currentState().startingText;
-        renderBuffer.push(new superText(text, canvas.width/2-text.length*30/2, 200, 5000));
+        renderBuffer.push(new superText(text, canvas.width/2-text.length*25/2, player.pos.y - 100, 5000));
     },
     
     next: function(){
