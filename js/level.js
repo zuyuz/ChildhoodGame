@@ -17,6 +17,7 @@ function Level(obj) {
     }
     this.activeRoom = obj.startPos; //string referencing active room id
     this.finalRoom = obj.finishPos;
+    this.startingText = obj.startingText;
     if(obj.check){
         this.check = obj.check;
     }
@@ -160,40 +161,9 @@ Level.prototype.onClick = function(point) {
 }
 
 function LevelInit(){
-    levels['lvl1'] = JSON.stringify({
-        background: 'lvl1',
-        name: 'lvl1',
-        startPos: 0,
-        finishPos: 1,
-        nextLevel: 'lvl2',
-        rooms: [
-            {
-                id: '0',
-                areas: [[293,59,373,364], [339,424,322,45]],
-                switches: [[[432,123,45,96],[1]]],
-                state: true,
-                exits: [1],
-                doors: {
-                    '1': [239,300]
-                },
-                center: [360,225]
-            },
-            {
-                id: '1',
-                areas: [[61,149,231,275]],
-                switches: [[[146,263,60,36],[0]]],
-                state: false,
-                exits: [0],
-                doors: {
-                  '0': [293,300]
-                },
-                center: [120,200]
-            }                
-        ]
-    });
-
     levels['lvl2'] = JSON.stringify({
            name: 'lvl2',
+           startingText: 'Final room - 6',
            background: 'lvl2',
            startPos: 0,
            finishPos: 5,
@@ -314,6 +284,7 @@ function LevelInit(){
         name: 'lvl3',
         startPos: 0,
         finishPos: 9,
+        startingText: 'Final level, final room - 10',
         nextLevel: 'lvl2',
         rooms: [
             {
@@ -452,6 +423,7 @@ function LevelInit(){
     });
     levels['lvl4'] = JSON.stringify({
            name: 'lvl4',
+           startingText: 'Finish in room 5',
            background: 'lvl4',
            startPos: 4,
            finishPos: 4,
@@ -569,6 +541,7 @@ function LevelInit(){
     });
     levels['lvl5'] = JSON.stringify({
            name: 'lvl5',
+           startingText: 'Finish in room 1',
            background: 'lvl5',
            startPos: 0,
            finishPos: 0,
@@ -577,110 +550,72 @@ function LevelInit(){
                 {
                    id: '0',
                    areas: [[832,322,897,416]],
-                   switches: [[[1602,350,32,32],[3]]],
+                   switches: [ [[1602,350,32,32],[3],true] ],
                    state: true,
                    exits:[1,2,3,4],
                    doors:{
                        '1': [1264,800],
                        '2': [1264,350],
-                       '3': [623,443],
-                       '4': [621,267]
+                       '3': [816,576],
+                       '4': [1745,574]
                    },
-                   center: [460,460]
+                   center: [1276,574]
                },
                {
                    id: '1',
-                   areas: [[0,491,288,279]],
-                   switches: [[[266,520,31,36],[5,7]],[[267,654,30,34],[3]]],
+                   areas: [[1022,769,484,194]],
+                   switches: [ [[1022,798,36,36],[2]] ],
                    state: false,
                    exits:[0],
                    doors:{
-                       '0': [295,606]
+                       '0': [1264,800]
                    },
-                   center: [170,573]
+                   center: [1264,894]
                },
                {
                    id: '2',
-                   areas: [[0,184,288,291]],
-                   switches: [[[133,444,28,35],[8]],[[266,385,31,32],[4]]],
-                   state: false,
-                   exits:[0,3],
+                   areas: [[1020,124,453,164]],
+                   switches: [],
+                   state: true,
+                   exits:[0],
                    doors:{
-                       '0': [296,302],
-                       '3': [168,175]
+                       '0': [1264,350]
                    },
-                   center: [231,305]
+                   center: [1262,256]
                },
                {
                    id: '3',
-                   areas: [[0,0,285,169]],
-                   switches: [],
+                   areas: [[477,320,324,418]],
+                   switches: [ [[738,675,30,60],[4]] ],
                    state: false,
-                   exits:[2,4],
+                   exits:[0,5],
                    doors:{
-                       '2': [168,175],
-                       '4': [289,83]
+                       '0': [816,576],
+                       '5': [462,574]
                    },
-                   center: [174,100]
+                   center: [637,576]
                },
                {
                    id: '4',
-                   areas: [[295,0,322,171]],
-                   switches: [[[555,141,30,30],[3]],[[598,79,36,22],[5,6]]],
+                   areas: [[1758,321,578,418]],
+                   switches: [ [[2274,346,30,30],[5]] ],
                    state: false,
-                   exits:[3],
+                   exits:[0],
                    doors:{
-                       '3': [289,83]
+                       '0': [1745,574]
                    },
-                   center: [455,80]
+                   center: [2096,555]
                },
                {
                    id: '5',
-                   areas: [[629,0,198,170]],
-                   switches: [[[640,142,28,32],[8], true]],
+                   areas: [[125,318,324,418]],
+                   switches: [ [[385,670,34,34],[2,1]] ],
                    state: false,
-                   exits:[8],
+                   exits:[3],
                    doors:{
-                       '8': [717,175]
+                       '3': [462,574]
                    },
-                   center: [675,65]
-               },
-               {
-                   id: '6',
-                   areas: [[830,0,196,167]],
-                   switches: [[[994,139,28,32],[4]]],
-                   state: false,
-                   exits:[8],
-                   doors:{
-                       '8': [921,175]
-                   },
-                   center: [984,76]
-               },
-               {
-                   id: '7',
-                   areas: [[628,366,398,175]],
-                   switches: [[[917,508,30,30],[2,6]],[[704,511,36,29],[8]]],
-                   state: false,
-                   exits:[8,0],
-                   doors:{
-                       '8': [812,355],
-                       '0': [623,443]
-                   },
-                   center: [744,454]
-               },
-               {
-                   id: '8',
-                   areas: [[627,179,399,170]],
-                   switches: [[[674,332,30,20],[2]],[[621,200,30,36],[0]]],
-                   state: false,
-                   exits:[5,0,6,7],
-                   doors:{
-                       '5': [717,175],
-                       '0': [621,267],
-                       '6': [921,175],
-                       '7': [812,355]
-                   },
-                   center: [733,263]
+                   center: [286,576]
                },
            ]
     }); 

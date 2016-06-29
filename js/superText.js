@@ -11,8 +11,8 @@ function superText(text,x,y,duration, followOffset){
 
 
 superText.prototype.render=function(ctx){
-    ctx.font = '36pt Calibri';
-    ctx.fillStyle = '#aaa';
+    ctx.font = '30pt Calibri';
+    ctx.fillStyle = '#bbb';
     ctx.strokeStyle = '#000';
     var point = new Point(this.x, this.y);
     if(this.followOffset){

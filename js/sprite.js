@@ -52,7 +52,7 @@ function initSprites(callback) {
 		 	}
   		},
   		{
-  			img_source: 'resources/1.jpg',
+  			img_source: 'resources/level2.png',
   			sprite_layout: function(img){
 				sprites.lvls.lvl2 = new Sprite(img, 0, 0, 1024, 768);
   			}
@@ -151,6 +151,12 @@ function initSprites(callback) {
   			img_source: 'resources/credits.png',
   			sprite_layout: function(img) {
 				sprites.lightbulb = new Sprite(img, 0,0,150,70);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/titles.png',
+  			sprite_layout: function(img) {
+				sprites.scene['titles'] = new Sprite(img, 0,0,500,1300);
 		 	}
   		},
   		{

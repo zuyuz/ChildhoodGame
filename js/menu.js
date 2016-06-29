@@ -13,7 +13,11 @@ function initMenu(){
     if(localStorage.getItem('progress')){
         ui.push(new Button(canvas.width/2-150, canvas.height/2-35, 150, 70, sprites.resume, () => {
             sounds.background.pause();
-            GameStateStack.pushState(new Level(JSON.parse(levels[localStorage.getItem('progress')])));}))
+            
+            GameStateStack.pushState(new Level(JSON.parse(levels[localStorage.getItem('progress')])));
+            var text = GameStateStack.currentState().startingText;
+            renderBuffer.push(new superText(text, canvas.width/2-text.length*30/2, 200, 5000));
+        }));
     }
     mainMenu = new Scene({
         'name': 'menu',

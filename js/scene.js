@@ -113,15 +113,15 @@ function ScenesInit(){
         
         'name': 'titles',
         'interface': [
-            new Button((canvas.width - sprites.scene['finalScene'].width)/2,
-                (canvas.height - sprites.scene['finalScene'].height)/2,
-                sprites.scene['finalScene'].width, sprites.
-                scene['finalScene'].height,
-                sprites.scene['finalScene'], function(){ GameStateStack.popState() })     
+            new Button((canvas.width - sprites.scene['titles'].width)/2,
+                canvas.height,
+                sprites.scene['titles'].width, sprites.
+                scene['titles'].height,
+                sprites.scene['titles'], function(){ GameStateStack.popState() })     
         ],
         'update': function(){
             var deltaSec = (new Date().getTime() - lastUpdate)/1000;
-            this.interface[0].y -= deltaSec*200;
+            this.interface[0].y -= deltaSec*100;
             if(this.interface[0].y+this.interface[0].height<0){
                 this.interface[0].y = canvas.height;
             }
