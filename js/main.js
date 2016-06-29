@@ -5,7 +5,7 @@ var Frame = window.requestAnimationFrame ||
             window.msRequestAnimationFrame;
 var player;
 var gameState = 'menu';
-var WIDTH = 900, HEIGHT = 600, offsetX, offsetY,OFFSET_X,OFFSET_Y;
+var WIDTH, HEIGHT, offsetX, offsetY,OFFSET_X,OFFSET_Y;
 var eventBuffer = [], lastUpdate, renderBuffer = [];
 var script = {
   'intro': ['menu'],
@@ -99,3 +99,10 @@ function update(){
   lastUpdate = now;
   Frame(update);
 }
+
+window.addEventListener('resize', function(e){
+	canvas = document.getElementsByTagName('canvas')[0];
+	canvas.width = width = window.innerWidth;
+	canvas.height = height = window.innerHeight;
+	ctx = canvas.getContext('2d');
+});
