@@ -11,14 +11,16 @@ function superText(text,x,y,duration, followOffset){
 
 
 superText.prototype.render=function(ctx){
-    ctx.font = '40pt Calibri';
-    ctx.fillStyle = '#0091c9';
+    ctx.font = '36pt Calibri';
+    ctx.fillStyle = '#aaa';
+    ctx.strokeStyle = '#000';
     var point = new Point(this.x, this.y);
     if(this.followOffset){
         point.x += offsetX;
         point.y += offsetY;
     }
     ctx.fillText(this.text,point.x,point.y);
+    ctx.strokeText(this.text,point.x,point.y);
     var now = new Date().getTime();
     console.log('time left ');
     console.log(this.endTime - now);

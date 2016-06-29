@@ -133,8 +133,6 @@ Level.prototype.onClick = function(point) {
                     }
                     if(sw.final){
                         if(this.isFinished()){
-                            console.log('final button pressed and finished');
-                            renderBuffer.push(new superText('GJ m8, i r8 8/8', 300, 300, 2000));
                             GameStateStack.next();
                         } else {
                             //game over, restart the level
@@ -148,6 +146,7 @@ Level.prototype.onClick = function(point) {
 
         } else {
             let path = this.pathToRoom(room);
+            player.clearPath();
             if(path.length){
                 this.activeRoom = roomIndex;
                 for(var i=path.length-2; i>=0; i--){
@@ -449,6 +448,123 @@ function LevelInit(){
                 center: [1806, 1813]
             }
         ]
+    });
+    levels['lvl4'] = JSON.stringify({
+           name: 'lvl4',
+           background: 'lvl4',
+           startPos: 4,
+           finishPos: 4,
+           nextLevel: 'finish',
+           rooms: [
+               {
+                   id: '0', //yo , ya postavuv ii v gry, mogesh testutu
+                   areas: [[62,124,744,710]],
+                   switches: [[[225,157,34,34],[5]]],
+                   state: true,
+                   exits:[1,3],
+                   doors:{
+                       '1': [834,465],
+                       '3':[436,862]
+                   },
+                   center: [454,448]
+               },
+               {
+                   id: '1',
+                   areas: [[861,126,996,705]],
+                   switches: [[[1344,157,37,33],[0,2,3]]],
+                   state: false,
+                   exits:[0,2,4],
+                   doors:{
+                       '0': [834,465],
+                       '2': [1893,456],
+                       '4': [1398,865]
+                   },
+                   center: [1352,476]
+               },
+               {
+                   id: '2',
+                   areas: [[1916,125,581,709]],
+                   switches: [],
+                   state: false,
+                   exits:[1,5],
+                   doors:{
+                       '1': [1893,456],
+                       '5': [2270,865]
+                   },
+                   center: [2256,512]
+               },
+               {
+                   id: '3',
+                   areas: [[62,893,740,678]],
+                   switches: [[[737,1402,34,41],[6]]],
+                   state: false,
+                   exits:[0,6],
+                   doors:{
+                       '0': [436,862],
+                       '6': [404,1601]
+                   },
+                   center: [410,1244]
+               },
+               {
+                   id: '4',
+                   areas: [[861,896,997,673]],
+                   switches: [[[1282,1505,32,32],[1], true]],
+                   state: true,
+                   exits:[1],
+                   doors:{
+                       '1': [1398,865]
+                   },
+                   center: [1376,1212]
+               },
+               {
+                   id: '5',
+                   areas: [[1917,892,580,676]],
+                   switches: [[[2464,1245,34,36],[0]]],
+                   state: false,
+                   exits:[2,8],
+                   doors:{
+                       '8': [2286,1600],
+                       '2': [2270,865]
+                   },
+                   center: [2238,1238]
+               },
+               {
+                   id: '6',
+                   areas: [[62,1629,742,869]],
+                   switches: [[[352,2429,38,37],[3]],[[65,2172,33,40],[7]]],
+                   state: true,
+                   exits:[7,3],
+                   doors:{
+                       '7': [836,2142],
+                       '3': [404,1601]
+                   },
+                   center: [450,2080]
+               },
+               {
+                   id: '7',
+                   areas: [[860,1628,996,870]],
+                   switches: [[[1634,2426,34,34],[8]]],
+                   state: false,
+                   exits:[8,6],
+                   doors:{
+                       '8': [1893,2118],
+                       '6': [836,2142]
+                   },
+                   center: [1377,2048]
+               },
+               {
+                   id: '8',
+                   areas: [[1918,1628,582,870]],
+                   switches: [[[2470,2303,27,31],[7]]],
+                   state: true,
+                   exits:[5,7],
+                   doors:{
+                       '5': [2286,1600],
+                       '7': [1893,2118]
+                   },
+                   center: [2245,2048]
+               }
+           ]
     });
 }
 

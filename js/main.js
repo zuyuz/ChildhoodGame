@@ -8,13 +8,15 @@ var gameState = 'menu';
 var WIDTH = 900, HEIGHT = 600, offsetX, offsetY,OFFSET_X,OFFSET_Y;
 var eventBuffer = [], lastUpdate, renderBuffer = [];
 var script = {
-  'lvl2': ['scene','scene1'],
-  'lvl3': ['level','lvl2'],
+  'intro': ['menu'],
+  'lvl2': ['level','lvl4'],
+  'lvl3': ['scene', 'intro'],
+  'lvl4': ['level', 'lvl3'],
   'scene1': ['scene','scene2'],
   'scene2': ['scene','scene3'],
   'scene3': ['scene','scene4'],
   'scene4': ['level', 'lvl2'],
-  'menu': ['level','lvl3']
+  'menu': ['scene', 'scene1']
 };
 /*frame(function name)*/
 function init(){
@@ -33,8 +35,8 @@ function init(){
   ScenesInit();
  
   // GameStateStack.pushState(new Level(JSON.parse(levels.lvl2))); //add lvl1 here
-  GameStateStack.pushState(mainMenu); //add lvl1 here
-  
+  GameStateStack.pushState(scenes['intro']); //add lvl1 here
+  sounds.background.play();
   canvas.addEventListener('mouseup', onClick);
   lastUpdate = new Date().getTime();
   Frame(update);

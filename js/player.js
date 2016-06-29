@@ -13,6 +13,9 @@ var player = {
         point.y -= this.background.img_height/2;
         this.background.draw(ctx, point);
     },
+    clearPath: function(){
+      this.posBuffer.length = 0;  
+    },
     update: function(ctx, lastUpdate){ //not sure wtff is happening here
         var now = new Date().getTime();
         let distance = Math.sqrt(Math.pow(this.pos.x-this.currentTarget.x,2)+Math.pow(this.pos.y-this.currentTarget.y,2));

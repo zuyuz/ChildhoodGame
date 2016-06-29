@@ -64,6 +64,12 @@ function initSprites(callback) {
   			}
   		},
   		{
+  			img_source: 'resources/level4.png',
+  			sprite_layout: function(img){
+				sprites.lvls.lvl4 = new Sprite(img, 0, 0, 2560, 2560);
+  			}
+  		},
+  		{
   			img_source: 'resources/star.png',
   			sprite_layout: function(img) {
 				sprites.restart = new Sprite(img, 634, 291, 52, 128);
@@ -105,6 +111,12 @@ function initSprites(callback) {
 				sprites.scene['scene4'] = new Sprite(img, 0,0,500,500);
 		 	}
   		},
+  		{
+  			img_source: 'resources/intro.png',
+  			sprite_layout: function(img) {
+				sprites.scene['intro'] = new Sprite(img, 0,0,500,500);
+		 	}
+  		},
 		 {
   			img_source: 'resources/start.png',
   			sprite_layout: function(img) {
@@ -115,6 +127,12 @@ function initSprites(callback) {
   			img_source: 'resources/quit.png',
   			sprite_layout: function(img) {
 				sprites.endGame = new Sprite(img, 0,0,300,100);
+		 	}
+  		},
+  		{
+  			img_source: 'resources/resume.png',
+  			sprite_layout: function(img) {
+				sprites.resume = new Sprite(img, 0,0,150,70);
 		 	}
   		},
   		{

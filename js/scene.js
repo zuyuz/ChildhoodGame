@@ -9,7 +9,6 @@ Scene.prototype.state = 'scene';
 
 Scene.prototype.render = function(ctx){
     for (let uiElem of this.interface) {
-        console.log(uiElem);
         uiElem.render(ctx);
     }
 }
@@ -66,6 +65,17 @@ function ScenesInit(){
                      sprites.scene['scene4'].width, sprites.
                      scene['scene4'].height,
                     sprites.scene['scene4'], function(){ GameStateStack.next() })
+        ]
+    });
+    
+    scenes['intro'] = new Scene({
+        'name': 'intro',
+        'interface': [
+            new Button((canvas.width - sprites.scene['intro'].width)/2,
+                     (canvas.height - sprites.scene['intro'].height)/2,
+                     sprites.scene['intro'].width, sprites.
+                     scene['intro'].height,
+                    sprites.scene['intro'], function(){ GameStateStack.next() })
         ]
     });
 }

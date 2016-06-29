@@ -24,7 +24,7 @@ var GameStateStack = {
     
     __loadSavedLvl: function(name) {  // fuck architecture
         let savedLvl = localStorage.getItem('progress') || name;
-        this.pushState(new Level(JSON.parse(levels[script[savedLvl][1]])));
+        this.pushState(new Level(JSON.parse(levels[savedLvl])));
     },
     
     next: function(){
@@ -33,16 +33,19 @@ var GameStateStack = {
             if(script.hasOwnProperty(name)){
                 this.popState();
                 if(script[name][0] == 'level'){
-                    if (name.startsWith('lvl')) {  // dirty hack
-                        localStorage.setItem('progress', name);
-                    }
+                    sounds.background.pause();
+                    localStorage.setItem('progress', script[name][1]);
                     this.__loadSavedLvl(name);
                 } else if (script[name][0] == 'scene'){
-                    if (localStorage.getItem('progress')) {
-                        this.__loadSavedLvl(name);
-                    } else {
-                        this.pushState(scenes[script[name][1]]);
+                    if(sounds.background.paused){
+                        sounds.background.play();
                     }
+                    this.pushState(scenes[script[name][1]]);
+                } else if (script[name][0] == 'menu'){
+                    if(sounds.background.paused){
+                        sounds.background.play();
+                    }
+                    GameStateStack.pushState(mainMenu);    
                 }
             }
         }
